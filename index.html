@@ -214,6 +214,43 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 .mission__side p { margin: 0; font-size: 18px; line-height: 1.6; color: var(--ink-2); }
 
+/* ---------- Contact ---------- */
+
+[hidden] { display: none !important; }
+
+.contact { padding: 0 0 96px; scroll-margin-top: 24px; }
+.contact__row { display: flex; flex-wrap: wrap; gap: 48px; }
+.contact__intro { flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.contact__intro h2 {
+  margin: 0; font-size: clamp(34px, 4vw, 50px); line-height: 1.02;
+  letter-spacing: -0.03em; font-weight: 400;
+}
+.contact__intro p { margin: 0; max-width: 28em; font-size: 18px; line-height: 1.6; color: var(--ink-2); }
+.contact__alt a { color: var(--acc); }
+
+.contact-form { flex: 1.4 1 520px; min-width: 0; }
+.fields { display: flex; flex-wrap: wrap; border-top: var(--line); border-left: var(--line); background: var(--paper); }
+.field {
+  flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 6px;
+  padding: 14px 16px; border-right: var(--line); border-bottom: var(--line);
+}
+.field--wide { flex-basis: 100%; }
+.field:focus-within { box-shadow: inset 0 0 0 2px var(--acc); }
+.field input, .field textarea {
+  width: 100%; padding: 4px 0; border: 0; outline: none; background: transparent;
+  color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.5;
+}
+.field textarea { min-height: 128px; resize: vertical; }
+.field--actions { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+button.btn { cursor: pointer; }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.form-status { margin: 0; font-size: 15px; color: var(--ink-2); }
+.form-status.is-error { color: #B42318; }
+.form-status a { color: inherit; }
+.form-done { display: flex; flex-direction: column; gap: 8px; padding: 24px 16px; border: var(--line); }
+.form-done p { margin: 0; font-size: 18px; line-height: 1.6; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
 /* ---------- Footer: title block ---------- */
 
 .title-block { display: flex; flex-wrap: wrap; margin-bottom: 32px; border-top: var(--line); border-left: var(--line); }
@@ -268,6 +305,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   .panel { padding: 24px; }
   .domains { padding: 56px 0 48px; }
   .mission { padding: 64px 0; }
+  .contact { padding-bottom: 64px; }
   .nav { gap: 20px; }
   .header-actions { display: none; }
   .cell h3 { font-size: 21px; }
@@ -302,7 +340,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
     <a href="#mission">Mission</a>
   </nav>
   <div class="header-actions">
-    <a class="btn btn--sm" href="#contact">Work with us</a>
+    <a class="btn btn--sm" href="#contact" data-topic="General">Work with us</a>
     <a class="btn btn--sm btn--solid" href="#partners">License your data</a>
   </div>
 </header>
@@ -314,7 +352,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
     <h1 id="hero-title">Frontier AI for foundational industries</h1>
     <p class="lead">Threedays is an AI research company. We help frontier labs post-train their models on expert-verified data from manufacturing, engineering and construction, licensed from the companies that do the work.</p>
     <div class="actions">
-      <a class="btn btn--lg" href="#contact">Work with us <span aria-hidden="true">→</span></a>
+      <a class="btn btn--lg" href="#contact" data-topic="General">Work with us <span aria-hidden="true">→</span></a>
       <a class="btn btn--lg btn--solid" href="#partners">License your data <span aria-hidden="true">→</span></a>
     </div>
   </div>
@@ -475,7 +513,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
     </div>
     <h2 id="labs-title">Expert knowledge from foundational industries</h2>
     <p class="panel__body">We build post-training datasets, RL environments and evaluations with your research team. Every task is grounded in licensed industrial records and verified by practitioners who do the work for a living.</p>
-    <div><a class="btn" href="#contact">Discuss a research project <span aria-hidden="true">→</span></a></div>
+    <div><a class="btn" href="#contact" data-topic="AI lab">Discuss a research project <span aria-hidden="true">→</span></a></div>
   </article>
 
   <article class="panel" id="partners" aria-labelledby="partners-title">
@@ -495,7 +533,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
     </div>
     <h2 id="partners-title">Your records are worth more than you think.</h2>
     <p class="panel__body">Drawings, specifications, inspection reports and project files hold decades of expertise. We prepare them for AI training, remove what's sensitive, and license them to frontier labs on terms you set.</p>
-    <div><a class="btn btn--solid" href="#contact">License your data</a></div>
+    <div><a class="btn btn--solid" href="#contact" data-topic="Data partner">License your data</a></div>
   </article>
 
 </div>
@@ -521,14 +559,46 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
     <h2 id="mission-title">AI that can be trusted <br>with the physical world</h2>
     <div class="mission__side">
       <p>Manufacturing, engineering and construction carry the weight of everything we build. Their knowledge lives in drawings, standards and decades of practice. We exist to bring it into frontier models carefully, with the people who created it.</p>
-      <div><a class="btn" href="#contact">Get in touch <span aria-hidden="true">→</span></a></div>
+      <div><a class="btn" href="#contact" data-topic="General">Get in touch <span aria-hidden="true">→</span></a></div>
     </div>
+  </div>
+</section>
+
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="section-head">
+    <p class="eyebrow">Contact</p>
+    <div class="scale" aria-hidden="true"></div>
+  </div>
+  <div class="contact__row">
+    <div class="contact__intro">
+      <h2 id="contact-title">Start a conversation</h2>
+      <p>Tell us about your lab, your data or the problem you're working on. We'll reply by email.</p>
+      <p class="contact__alt">Prefer email? Write to <a href="mailto:hello@threedays.co">hello@threedays.co</a>.</p>
+    </div>
+    <form class="contact-form" action="/api/contact" method="post">
+      <input type="hidden" name="topic" value="General">
+      <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <div class="fields">
+        <label class="field"><span class="tb__label">NAME</span><input name="name" autocomplete="name" maxlength="120" required></label>
+        <label class="field"><span class="tb__label">ORGANIZATION</span><input name="org" autocomplete="organization" maxlength="160" required></label>
+        <label class="field field--wide"><span class="tb__label">EMAIL</span><input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+        <label class="field field--wide"><span class="tb__label">NOTE</span><textarea name="note" rows="5" maxlength="5000" required></textarea></label>
+        <div class="field field--wide field--actions">
+          <button class="btn btn--solid" type="submit">Send <span aria-hidden="true">→</span></button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="form-done" hidden>
+        <span class="tb__label">RECEIVED</span>
+        <p>Thank you. We'll reply by email shortly.</p>
+      </div>
+    </form>
   </div>
 </section>
 
 </main>
 
-<footer class="title-block" id="contact">
+<footer class="title-block">
   <div class="tb tb--180">
     <span class="tb__label">ENGINEER</span>
     <span class="tb__brand">
@@ -554,7 +624,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   </div>
   <div class="tb tb--wide">
     <span class="tb__label">CONTACT</span>
-    <span class="tb__links"><a href="#contact">Get in touch</a><a href="#partners">License your data</a></span>
+    <span class="tb__links"><a href="#contact" data-topic="General">Get in touch</a><a href="mailto:hello@threedays.co">hello@threedays.co</a><a href="#partners">License your data</a></span>
   </div>
   <div class="tb tb--240">
     <span class="tb__label">LEGAL</span>
@@ -566,5 +636,54 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 
 </div>
 </div>
+<script>
+(() => {
+  const form = document.querySelector('.contact-form');
+  if (!form) return;
+  const fields = form.querySelector('.fields');
+  const done = form.querySelector('.form-done');
+  const status = form.querySelector('.form-status');
+  const button = form.querySelector('button[type="submit"]');
+  const topic = form.elements.topic;
+  const fallback = 'Something went wrong. Please email <a href="mailto:hello@threedays.co">hello@threedays.co</a>.';
+
+  const setStatus = (html, isError) => {
+    status.innerHTML = html;
+    status.classList.toggle('is-error', Boolean(isError));
+  };
+  const showDone = () => { fields.hidden = true; done.hidden = false; };
+
+  document.querySelectorAll('a[data-topic]').forEach((link) => {
+    link.addEventListener('click', () => {
+      topic.value = link.dataset.topic;
+      setTimeout(() => form.elements.name.focus({ preventScroll: true }), 450);
+    });
+  });
+
+  const params = new URLSearchParams(location.search);
+  if (params.has('sent')) showDone();
+  if (params.has('error')) setStatus(fallback, true);
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    button.disabled = true;
+    setStatus('Sending…');
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) { showDone(); return; }
+      setStatus(data.error ? data.error.replace('hello@threedays.co', '<a href="mailto:hello@threedays.co">hello@threedays.co</a>') : fallback, true);
+    } catch {
+      setStatus(fallback, true);
+    }
+    button.disabled = false;
+  });
+})();
+</script>
 </body>
 </html>
